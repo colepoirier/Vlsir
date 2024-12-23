@@ -5,6 +5,7 @@
 //!
 
 use prost_build;
+use protox;
 
 fn main() {
     // Create the Prost config
@@ -28,5 +29,6 @@ fn main() {
         "protos/tetris.proto",
         "protos/spice.proto",
     ];
-    config.compile_protos(&src, &["protos/"]).unwrap();
+    let file_descriptors = protox::compile(src, ["protos/"]).unwrap();
+    config.compile_fds(file_descriptors).unwrap();
 }
